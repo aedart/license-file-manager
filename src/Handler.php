@@ -40,7 +40,7 @@ class Handler implements IFileHandler{
      *
      * @return bool True if the source file was successfully copied to the target destination, false if not
      */
-    protected function performCopy($sourceFile, $targetDestination){
+    public function performCopy($sourceFile, $targetDestination){
         return copy($sourceFile, $targetDestination);
     }
 }
