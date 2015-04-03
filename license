@@ -6,7 +6,8 @@
  */
 
 // Load the composer autoload
-require_once __DIR__ . '/vendor/autoload.php';
+//require_once __DIR__ . '/vendor/autoload.php';
+require_once dirname(__FILE__).'/autoload.php';
 
 // Create a new application, assign command(s) and run it
 use Symfony\Component\Console\Application;
