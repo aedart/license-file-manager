@@ -19,6 +19,9 @@ interface IFileHandler {
      * the destination folder and renames the given file into
      * the specified filename
      *
+     * NB: If there already exist a license file int the destination folder,
+     * with the same name, then that file will be overwritten
+     *
      * @param string $sourceLicense Full path and filename of the target license file
      * @param string $destination The folder where to place the given license file
      * @param string $destinationFilename [Optional][Default 'LICENSE'] New name of the
