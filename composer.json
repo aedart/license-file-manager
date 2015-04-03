@@ -1,0 +1,29 @@
+{
+  "name": "aedart/license-file-manager",
+  "description": "TODO...",
+  "keywords": [
+    "license",
+    "manager"
+  ],
+  "homepage": "https://bitbucket.org/aedart/license-file-manager",
+  "license": "BSD-3-Clause",
+  "type": "library",
+  "authors": [
+    {
+      "name": "Alin Eugen Deac",
+      "email": "aedart@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.4.0"
+  },
+  "require-dev": {
+    "codeception/codeception": "2.0.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Aedart\\License\\File\\Manager\\": "src/"
+    }
+  },
+  "minimum-stability": "stable"
+}
