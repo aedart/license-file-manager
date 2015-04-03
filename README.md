@@ -77,7 +77,7 @@ Invoke the following command, and your license file will be copied from your pac
 
 ```
 #!shell
-php vendor/bin/aedart license:copy vendor/acme/license/Apache-2-license
+php vendor/bin/license-manager license:copy vendor/acme/license/Apache-2-license
 ```
 
 A `LICENSE` file should be added into the root of your project.
@@ -91,7 +91,7 @@ If you wish to let composer do the work for you, each time that you work on your
 #!json
 {
   "scripts": {
-    "post-update-cmd": "php vendor/bin/aedart license:copy vendor/acme/license/Apache-2-license"
+    "post-update-cmd": "php vendor/bin/license-manager license:copy vendor/acme/license/Apache-2-license"
   }
 }
 ```
