@@ -19,6 +19,7 @@
     "symfony/console": "2.*"
   },
   "require-dev": {
+    "aedart/license": "1.*",
     "codeception/codeception": "2.0.*",
     "mockery/mockery": "0.9.*"
   },
@@ -28,5 +29,5 @@
     }
   },
   "minimum-stability": "stable",
-  "bin":["license"]
+  "bin":["aedart"]
 }
