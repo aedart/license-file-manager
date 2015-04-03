@@ -52,7 +52,7 @@ class CopyLicenseCommand extends Command{
         $handler = new Handler();
 
         // Perform the copy
-        $handler->copy($source, '', $filename);
+        $handler->copy($source, realpath(getcwd()), $filename);
 
         // Output trace msg
         $msg = sprintf('%s was successfully copied into %s', $source, $filename);
