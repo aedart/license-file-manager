@@ -24,11 +24,10 @@ class Handler implements IFileHandler{
         $fullDestination = $destination . '/' . $destinationFilename;
 
         // Perform the copy-file
-        $result = $this->performCopy($sourceLicense, $fullDestination);
-
-        // Post copy check
-        if(!$result){
-            throw new LicenseCouldNotBeCreatedException(sprintf('%s could not be created, from source: %s', $fullDestination, $sourceLicense));
+        try {
+            $this->performCopy($sourceLicense, $fullDestination);
+        } catch(\Exception $e){
+            throw new LicenseCouldNotBeCreatedException(sprintf('%s could not be created, from source: %s; %s', $fullDestination, $sourceLicense, $e->getMessage()), 0, $e);
         }
     }
 
