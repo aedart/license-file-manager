@@ -21,6 +21,11 @@ class CopyLicenseCommand extends Command{
     const SOURCE_ARGUMENT = 'source';
 
     /**
+     * Destination folder option name
+     */
+    const DESTINATION_OPTION = 'destinationFolder';
+
+    /**
      * License filename option name
      */
     const LICENSE_FILENAME_OPTION = 'licenseFilename';
@@ -35,6 +40,13 @@ class CopyLicenseCommand extends Command{
                 'Source license file to be copied'
             )
             ->addOption(
+                self::DESTINATION_OPTION,
+                'destination',
+                InputOption::VALUE_OPTIONAL,
+                'The target destination folder where the license file is to be placed - default is the current working directory',
+                realpath(getcwd())
+            )
+            ->addOption(
                 self::LICENSE_FILENAME_OPTION,
                 'name',
                 InputOption::VALUE_OPTIONAL,
@@ -46,13 +58,14 @@ class CopyLicenseCommand extends Command{
     protected function execute(InputInterface $input, OutputInterface $output) {
         // Get the arguments and options
         $source = $input->getArgument(self::SOURCE_ARGUMENT);
+        $destination = $input->getOption(self::DESTINATION_OPTION);
         $filename = $input->getOption(self::LICENSE_FILENAME_OPTION);
 
         // Create a new (license) file handler
         $handler = new Handler();
 
         // Perform the copy
-        $handler->copy($source, realpath(getcwd()), $filename);
+        $handler->copy($source, $destination, $filename);
 
         // Output trace msg
         $msg = sprintf('%s was successfully copied into %s', $source, $filename);
