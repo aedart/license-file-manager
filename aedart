@@ -16,6 +16,6 @@ if (file_exists(__DIR__.'/vendor/autoload.php')) {
 use Symfony\Component\Console\Application;
 use Aedart\License\File\Manager\Console\CopyLicenseCommand;
 
-$app = new Application('Aedart License File Manager', '1');
+$app = new Application('Aedart', '1');
 $app->add(new CopyLicenseCommand());
 $app->run();
