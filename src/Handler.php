@@ -13,7 +13,7 @@ use Aedart\License\File\Manager\Interfaces\IFileHandler;
  * @package Aedart\License\File\Manager
  */
 class Handler implements IFileHandler{
-    
+
     public function copy($sourceLicense, $destination, $destinationFilename = 'LICENSE') {
         // Check if the source license file exists
         if(!file_exists($sourceLicense)){
