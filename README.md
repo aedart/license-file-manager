@@ -80,7 +80,7 @@ Invoke the following command, and your license file will be copied from your pac
 php vendor/bin/aedart license:copy vendor/acme/license/Apache-2-license
 ```
 
-A 'LICENSE' file should be added into the root of your project.
+A `LICENSE` file should be added into the root of your project.
 
 __Warning__: If there already exists a file named LICENSE in your project root, then it will be overwritten!
 
