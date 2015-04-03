@@ -29,5 +29,8 @@
     }
   },
   "minimum-stability": "stable",
-  "bin":["aedart"]
+  "bin":["aedart"],
+  "scripts": {
+    "post-update-cmd": "php aedart license:copy vendor/aedart/license/aedart/BSD-3-Clause"
+  }
 }
