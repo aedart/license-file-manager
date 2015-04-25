@@ -91,7 +91,7 @@ If you wish to let composer do the work for you, each time that you work on your
 #!json
 {
   "scripts": {
-    "post-update-cmd": "php vendor/bin/license-manager license:copy vendor/acme/license/Apache-2-license"
+    "post-update-cmd": "vendor/bin/license-manager license:copy vendor/acme/license/Apache-2-license"
   }
 }
 ```
