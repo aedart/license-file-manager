@@ -16,12 +16,12 @@
   ],
   "require": {
     "php": ">=5.5.9",
-    "symfony/console": "2.*"
+    "symfony/console": "~2.7"
   },
   "require-dev": {
     "aedart/license": "1.*",
-    "codeception/codeception": "2.0.*",
-    "mockery/mockery": "0.9.*"
+    "codeception/codeception": "~2.1",
+    "mockery/mockery": "~0.9"
   },
   "autoload": {
     "psr-4": {
