@@ -3,7 +3,7 @@
 use Aedart\License\File\Manager\Interfaces\IFileHandler;
 use Aedart\License\File\Manager\Handler;
 use Codeception\Configuration;
-use \Mockery;
+use \Mockery as m;
 
 /**
  * Class HandlerTest
@@ -42,7 +42,7 @@ class HandlerTest extends \Codeception\TestCase\Test
     protected function _after()
     {
         @unlink($this->destinationFolder . '/LICENSE');
-        Mockery::close();
+        m::close();
     }
 
     /********************************************************************
@@ -55,7 +55,7 @@ class HandlerTest extends \Codeception\TestCase\Test
      * @return Mockery\MockInterface|IFileHandler
      */
     protected function getHandler(){
-        $m = Mockery::mock('Aedart\License\File\Manager\Handler')->makePartial();
+        $m = m::mock('Aedart\License\File\Manager\Handler')->makePartial();
         return $m;
     }
 
@@ -103,7 +103,7 @@ class HandlerTest extends \Codeception\TestCase\Test
 
         $handler->shouldReceive('performCopy')
             ->withAnyArgs()
-            ->andReturn(false);
+            ->andThrow(Exception::class);
 
         $handler->copy($this->sourceLicense, $this->destinationFolder);
     }
