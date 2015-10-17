@@ -1,3 +1,8 @@
+[![Latest Stable Version](https://poser.pugx.org/aedart/license-file-manager/v/stable)](https://packagist.org/packages/aedart/license-file-manager)
+[![Total Downloads](https://poser.pugx.org/aedart/license-file-manager/downloads)](https://packagist.org/packages/aedart/license-file-manager)
+[![Latest Unstable Version](https://poser.pugx.org/aedart/license-file-manager/v/unstable)](https://packagist.org/packages/aedart/license-file-manager)
+[![License](https://poser.pugx.org/aedart/license-file-manager/license)](https://packagist.org/packages/aedart/license-file-manager)
+
 # License File Manager
 
 A simple LICENSE-file manager for you composer packages. Allows you to store / organise your various licenses into a single package, fetch it and update your current project’s license file with the desired one. At its core, this package is nothing more than a "glorified" wrapper for PHP's copy function, but it makes managing license files a bit easier, when you are developing multiple packages.
