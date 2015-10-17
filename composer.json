@@ -5,7 +5,7 @@
     "license",
     "manager"
   ],
-  "homepage": "https://bitbucket.org/aedart/license-file-manager",
+  "homepage": "https://github.com/aedart/license-file-manager",
   "license": "BSD-3-Clause",
   "type": "library",
   "authors": [
