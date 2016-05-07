@@ -85,7 +85,7 @@ php vendor/bin/license-manager license:copy vendor/acme/license/Apache-2-license
 
 A `LICENSE` file should be added into the root of your project.
 
-__Warning__: If there already exists a file named LICENSE in your project root, then it will be overwritten!
+__NOTE__: If there already exists a file named LICENSE in your project root, it will only be overwritten if its SHA1 checksum is not the same as the license file from the vendor folder. 
 
 #### Alternative: composer post-update-cmd script
 
