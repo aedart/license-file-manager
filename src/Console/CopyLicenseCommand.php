@@ -62,13 +62,9 @@ class CopyLicenseCommand extends Command{
         $filename = $input->getOption(self::LICENSE_FILENAME_OPTION);
 
         // Create a new (license) file handler
-        $handler = new Handler();
+        $handler = new Handler($output);
 
         // Perform the copy
         $handler->copy($source, $destination, $filename);
-
-        // Output trace msg
-        $msg = sprintf('%s was successfully copied into %s', $source, $filename);
-        $output->writeln('<info>'.$msg.'</info>');
     }
 }
