@@ -1,12 +1,15 @@
 <?php
 
-use Aedart\License\File\Manager\Interfaces\IFileHandler;
 use Aedart\License\File\Manager\Handler;
 use Codeception\Configuration;
 use \Mockery as m;
+use Symfony\Component\Console\Output\OutputInterface;
+use Faker\Factory;
 
 /**
  * Class HandlerTest
+ *
+ * @group handler
  *
  * @coversDefaultClass Aedart\License\File\Manager\Handler
  *
@@ -18,6 +21,11 @@ class HandlerTest extends \Codeception\TestCase\Test
      * @var \UnitTester
      */
     protected $tester;
+
+    /**
+     * @var Faker\Generator
+     */
+    protected $faker;
 
     /**
      * Source dummy license file
@@ -35,13 +43,14 @@ class HandlerTest extends \Codeception\TestCase\Test
 
     protected function _before()
     {
+        $this->faker = Factory::create();
         $this->sourceLicense = Configuration::dataDir() . 'license/MyCustomLicense';
         $this->destinationFolder = Configuration::outputDir();
     }
 
     protected function _after()
     {
-        @unlink($this->destinationFolder . '/LICENSE');
+        @unlink($this->destinationFolder . 'LICENSE');
         m::close();
     }
 
@@ -52,11 +61,34 @@ class HandlerTest extends \Codeception\TestCase\Test
     /**
      * Get a new instance of the (license) handler mock
      *
-     * @return Mockery\MockInterface|IFileHandler
+     * @param OutputInterface $output
+     *
+     * @return Handler
      */
-    protected function getHandler(){
-        $m = m::mock('Aedart\License\File\Manager\Handler')->makePartial();
-        return $m;
+    protected function getHandler($output){
+        return new Handler($output);
+    }
+
+    /**
+     * Returns a handler mock
+     *
+     * @param OutputInterface $output
+     *
+     * @return m\Mock|Handler
+     */
+    protected function makeHandlerMock($output)
+    {
+        return m::mock(Handler::class, [$output])->makePartial();
+    }
+
+    /**
+     * Returns a mock of the output interface
+     *
+     * @return m\MockInterface|OutputInterface
+     */
+    protected function makeOutputMock()
+    {
+        return m::mock(OutputInterface::class);
     }
 
     /********************************************************************
@@ -65,18 +97,53 @@ class HandlerTest extends \Codeception\TestCase\Test
 
     /**
      * @test
-     * @covers ::copy
+     *
+     * @covers ::__construct
+     */
+    public function canObtainHandler()
+    {
+        $handler = $this->getHandler($this->makeOutputMock());
+
+        $this->assertNotNull($handler);
+    }
+
+    /**
+     * @test
      *
      * @covers ::performCopy
      */
-    public function copy(){
-        $handler = $this->getHandler();
+    public function canCopyFile(){
+        $handler = $this->getHandler($this->makeOutputMock());
 
-        $handler->copy($this->sourceLicense, $this->destinationFolder);
+        $targetLicense = $this->destinationFolder . 'LICENSE';
 
-        $targetLicense = $this->destinationFolder . '/LICENSE';
+        $handler->performCopy($this->sourceLicense, $targetLicense);
 
         $this->assertFileExists($targetLicense);
+    }
+
+    /**
+     * @test
+     *
+     * @covers ::checksum
+     */
+    public function canObtainChecksumOfExistingFile()
+    {
+        $handler = $this->getHandler($this->makeOutputMock());
+
+        $this->assertNotEmpty($handler->checksum($this->sourceLicense));
+    }
+
+    /**
+     * @test
+     *
+     * @covers ::checksum
+     */
+    public function returnsEmptyChecksumWhenFileDoesNotExist()
+    {
+        $handler = $this->getHandler($this->makeOutputMock());
+
+        $this->assertEmpty($handler->checksum($this->faker->word));
     }
 
     /**
@@ -85,9 +152,55 @@ class HandlerTest extends \Codeception\TestCase\Test
      *
      * @expectedException \Aedart\License\File\Manager\Exceptions\LicenseFileDoesNotExistException
      */
-    public function attemptCopyNonExistingLicenseFile(){
-        $handler = $this->getHandler();
-        $handler->copy('var/some/special/place/where/no/license/file/exists/LICENSE_' . rand(1, 9999), $this->destinationFolder);
+    public function itFailsWhenSourceLicenseFileDoesNotExist()
+    {
+        $handler = $this->getHandler($this->makeOutputMock());
+
+        $handler->copy($this->faker->word, $this->destinationFolder);
+    }
+
+    /**
+     * @test
+     *
+     * @covers :copy
+     * @covers :performCopy
+     * @covers :checksum
+     */
+    public function itCanCopySourceLicenseFile()
+    {
+        $output = $this->makeOutputMock();
+        $output->shouldReceive('writeln')
+            ->withAnyArgs();
+
+        $handler = $this->getHandler($output);
+
+        $handler->copy($this->sourceLicense, $this->destinationFolder);
+
+        $targetLicense = $this->destinationFolder . 'LICENSE';
+
+        $this->assertFileExists($targetLicense);
+    }
+
+    /**
+     * @test
+     *
+     * @covers ::copy
+     */
+    public function doesNotCopyLicenseIfChecksumIsTheSame()
+    {
+        $output = $this->makeOutputMock();
+        $output->shouldReceive('writeln')
+            ->withAnyArgs();
+
+        $handler = $this->makeHandlerMock($output);
+        $handler->shouldReceive('checksum')
+            ->withAnyArgs()
+            ->twice()
+            ->andReturn($this->getHandler($output)->checksum($this->sourceLicense));
+
+        $handler->shouldNotReceive('performCopy');
+
+        $handler->copy($this->sourceLicense, $this->destinationFolder);
     }
 
     /**
@@ -98,9 +211,9 @@ class HandlerTest extends \Codeception\TestCase\Test
      *
      * @expectedException \Aedart\License\File\Manager\Exceptions\LicenseCouldNotBeCreatedException
      */
-    public function actualCopyFails(){
-        $handler = $this->getHandler();
-
+    public function itFailsIfLicenseCouldNotBeWrittenToDisk()
+    {
+        $handler = $this->makeHandlerMock($this->makeOutputMock());
         $handler->shouldReceive('performCopy')
             ->withAnyArgs()
             ->andThrow(Exception::class);
