@@ -11,8 +11,6 @@ use Faker\Factory;
  *
  * @group handler
  *
- * @coversDefaultClass Aedart\License\File\Manager\Handler
- *
  * @author Alin Eugen Deac <aedart@gmail.com>
  */
 class HandlerTest extends \Codeception\TestCase\Test
@@ -97,8 +95,6 @@ class HandlerTest extends \Codeception\TestCase\Test
 
     /**
      * @test
-     *
-     * @covers ::__construct
      */
     public function canObtainHandler()
     {
@@ -109,8 +105,6 @@ class HandlerTest extends \Codeception\TestCase\Test
 
     /**
      * @test
-     *
-     * @covers ::performCopy
      */
     public function canCopyFile(){
         $handler = $this->getHandler($this->makeOutputMock());
@@ -124,8 +118,6 @@ class HandlerTest extends \Codeception\TestCase\Test
 
     /**
      * @test
-     *
-     * @covers ::checksum
      */
     public function canObtainChecksumOfExistingFile()
     {
@@ -136,8 +128,6 @@ class HandlerTest extends \Codeception\TestCase\Test
 
     /**
      * @test
-     *
-     * @covers ::checksum
      */
     public function returnsEmptyChecksumWhenFileDoesNotExist()
     {
@@ -148,7 +138,6 @@ class HandlerTest extends \Codeception\TestCase\Test
 
     /**
      * @test
-     * @covers ::copy
      *
      * @expectedException \Aedart\License\File\Manager\Exceptions\LicenseFileDoesNotExistException
      */
@@ -161,10 +150,6 @@ class HandlerTest extends \Codeception\TestCase\Test
 
     /**
      * @test
-     *
-     * @covers :copy
-     * @covers :performCopy
-     * @covers :checksum
      */
     public function itCanCopySourceLicenseFile()
     {
@@ -183,8 +168,6 @@ class HandlerTest extends \Codeception\TestCase\Test
 
     /**
      * @test
-     *
-     * @covers ::copy
      */
     public function doesNotCopyLicenseIfChecksumIsTheSame()
     {
@@ -205,9 +188,6 @@ class HandlerTest extends \Codeception\TestCase\Test
 
     /**
      * @test
-     * @covers ::copy
-     *
-     * @covers ::performCopy
      *
      * @expectedException \Aedart\License\File\Manager\Exceptions\LicenseCouldNotBeCreatedException
      */
