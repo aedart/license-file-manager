@@ -1,4 +1,5 @@
 {
+  "abandoned": true,
   "name": "aedart/license-file-manager",
   "description": "A simple LICENSE-file manager for you composer packages. Allows you to store / organise your various licenses into a single package, fetch it and update your current project’s license file with the desired one. At its core, this package is nothing more than a ‘glorified’ wrapper for PHP’s copy function, but it makes managing license files a bit easier, when you are developing multiple packages.",
   "keywords": [
